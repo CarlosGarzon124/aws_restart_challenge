@@ -1,0 +1,10 @@
+[
+    {
+            "id": "test uuid4",
+            "uId": "test id",
+            "name": "Test ",
+            "price": "55000",
+            "stock": "3",
+            "description": "Test description"
+    }
+]

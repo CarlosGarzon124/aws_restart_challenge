@@ -1,0 +1,14 @@
+Instrucciones para correr el codigo de inventario
+ python version 3.10
+
+1. Levantar el env con venv o con pycharm
+
+2. Configurar el archivo .env el el directorio raiz del proyecto con las variables
+    - JSON_DATA_FILE que es la direccion relativa del archivo json que alverga los datos
+    - ROOT_PATH que es la direccion principal del challenge
+
+3. Instalar dependencias
+    - RiCH latest
+    - python-decouple latest
+
+4. Punto de entrada main.py
