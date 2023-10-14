@@ -1,10 +1,1 @@
-[
-    {
-            "id": "test uuid4",
-            "uId": "test id",
-            "name": "Test ",
-            "price": "55000",
-            "stock": "3",
-            "description": "Test description"
-    }
-]
+[{"id": "70a27f5c-5dce-47ad-8c66-a91b47ee600f", "uId": "pd-f4218632-7684-4a62-9e69-037f7d6a3ae7", "name": "new test 2", "price": 50000.0, "stock": 50, "description": "new test description 2"}, {"id": "c94f35bf-cd07-4263-9e56-4809a6967211", "uId": "pd-977606ae-35d6-4f11-89b8-6ff9b03c49fc", "name": "test 2", "price": 2.0, "stock": 2, "description": "test"}, {"id": "4f620a54-1635-4aca-af25-3ef9f028195e", "uId": "pd-8f5b082c-19f6-49bc-86f5-004e7997ace8", "name": "test3", "price": 1.0, "stock": 1, "description": "test"}]

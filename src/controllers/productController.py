@@ -1,39 +1,60 @@
 from src.handlers.jsonUtility import JsonUtility
 from src.model.product import Product
-import uuid
 
 
 class ProductController():
 
+    def __init__(self, fileDir):
+        self.fileDir = fileDir
+
     def create_product(self, data):
-        product = Product(data["name"], 
-                          data["price"],
-                          data["stock"],
-                          data["descritption"])
-        
-        return product
+        if data is None:
+            return None
+        if self.validate_product_data(data):
+            products = self.load_products_from_file(self.fileDir)
+            product = Product(name=data["name"],
+                              price=data["price"],
+                              stock=data["stock"],
+                              description=data["description"])
+            products.append(product)
+            productDict = self.serialize_json_products(products)
+            JsonUtility.save_data(self.fileDir, productDict)
+            return product
+
+        return None
 
 
     def get_product_by(self, identifier):
 
+        products = list(self.load_products_from_file(self.fileDir))
         product = None
-        try:
-            identifier = uuid.UUID(identifier)
-            product = self.products.get(identifier)
-
-        except ValueError:
-            product = None
-            for p in self.products.values():
-                if p.name == identifier:
-                    product = p
+        for p in products:
+            if p.name == identifier or p.uId == identifier:
+                product = p
         
         return product
 
-    def show_products(self):
-        #todo 
-        #adicionar el metodo para buscar los productos y devolverlos
-        #como una lista de objetos
-        pass
+    def get_all_products(self):
+        return self.load_products_from_file(self.fileDir)
+
+
+    def update_product_by(self, identifier, newData):
+        if newData is None:
+            return None
+        if self.validate_product_data(newData):
+            products = list(self.load_products_from_file(self.fileDir))
+            for p in products:
+                if p.name == identifier or p.uId == identifier:
+                    p.name = newData["name"]
+                    p.price = newData["price"]
+                    p.stock = newData["stock"]
+                    p.description = newData["description"]
+                    product = p
+                    productDict = self.serialize_json_products(products)
+                    JsonUtility.save_data(self.fileDir, productDict)
+                    return product
+        return None
+
 
     @staticmethod
     def load_products_from_file(fileDir):
@@ -54,6 +75,22 @@ class ProductController():
             products.append(product)
 
         return products
+
+    def validate_product_data(self, data):
+        if type(data["name"]) is not str or type(data["price"]) is not float or type(data["stock"]) is not int \
+            or type(data["description"]) is not str:
+            return False
+
+        return True
+
+    @staticmethod
+    def serialize_json_products(products):
+        productList = []
+        for p in products:
+            productList.append(p.serialize_product())
+
+
+        return productList
         
 
         

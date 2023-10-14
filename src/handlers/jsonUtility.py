@@ -2,17 +2,26 @@ import json
 from rich import print as rprint
 
 class JsonUtility:
-    #to do 
-    #crear la logica para agregar y leer los datos desde el 
-    #archivo json
+
     @staticmethod
     def load_data(filePath):
         try:
             with open(filePath, 'r') as file:
                 data = json.load(file)
+                if len(data) == 0:
+                    data = None
                 return data
         except FileNotFoundError:
-            rprint(f"El archivo {filePath} no fue encontrado en la ruta especificada")
+            rprint(f"The file {filePath} was not found in the specified route")
+            return None
+
+    @staticmethod
+    def save_data(filePath, data):
+        try:
+            with open(filePath, 'w') as file:
+                json.dump(data, file)
+        except FileNotFoundError:
+            rprint(f"The file {filePath} was not found in the specified route")
             return None
         
         
