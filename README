@@ -3,12 +3,12 @@ Instrucciones para correr el codigo de inventario
 
 1. Levantar el env con venv o con pycharm
 
-2. Configurar el archivo .env el el directorio raiz del proyecto con las variables
-    - JSON_DATA_FILE que es la direccion relativa del archivo json que alverga los datos
+2. Configurar el archivo .env en el directorio raiz del proyecto con las variables
+    - JSON_DATA_FILE que es la direccion relativa del archivo json que contiene los datos
     - ROOT_PATH que es la direccion principal del challenge
 
 3. Instalar dependencias
-    - RiCH latest
+    - RICH latest
     - python-decouple latest
 
-4. Punto de entrada main.py
+4. Punto de entrada main.py usar la terminal cmd para ver los colores de RICH
