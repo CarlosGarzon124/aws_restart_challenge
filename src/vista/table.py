@@ -10,11 +10,11 @@ class ProductTable():
     
     def generate_table_many(self, products):
         table = Table(title=self.tableName, header_style="bold magenta", show_header=True)
-        table.add_column("ID", style="dim")
+        table.add_column("ID")
         table.add_column("NAME")
-        table.add_column("PRICE", justify="right", width=12)
-        table.add_column("STOCK", style="dim", width=12, justify="right")
-        table.add_column("DESCRIPTION", width=20)
+        table.add_column("PRICE", justify="right")
+        table.add_column("STOCK", justify="right")
+        table.add_column("DESCRIPTION")
 
         for p in products:
             table.add_row(

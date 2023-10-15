@@ -10,34 +10,62 @@ class MainController():
         self.dController = ConsoleDisplay()
 
 
-    def show_product_by(self, identify):
-        #to do
-        #tomar el identificador del usuario
-        product = self.pController.get_product_by(identify)
-        if product is None:
-            self.dController.print_r("!!Product not Found¡¡")
+    def show_product_by(self):
+        identifier = self.dController.display_get_product_identifier()
+        product = self.pController.get_product_by(identifier)
+        if self.dController.display_product_table("Selected product", product):
             return
-        self.dController.display_product_table("Product Found", product)
+        else:
+            ConsoleDisplay.print_r("!!No Products found or process canceled¡¡")
+
 
     def show_all_products(self):
         products = self.pController.get_all_products()
-        self.dController.display_product_table(self.json_path, products)
+        self.dController.display_product_table("All products", products)
 
     def create_product(self):
         inputs = self.dController.display_get_product_data()
         product = self.pController.create_product(inputs)
         self.dController.display_product_table("New product", product)
 
-    def update_product(self, identify):
-        self.show_product_by(identify)
-        inputs = self.dController.display_get_product_data()
-        product = self.pController.update_product_by(identify, inputs)
-        self.dController.display_product_table("Updated product", product)
+
+    def update_product(self):
+        identifier = self.dController.display_get_product_identifier()
+        product = self.pController.get_product_by(identifier)
+        if self.dController.display_product_table("Selected product", product):
+            inputs = self.dController.display_get_product_data()
+            if inputs is None:
+                ConsoleDisplay.print_r("Canceled")
+                return
+            product = self.pController.update_product_by(identifier, inputs)
+            self.dController.display_product_table("Product updated correctly", product)
+        else:
+            ConsoleDisplay.print_r("!!No Products found or process canceled¡¡")
+
+
+    def delete_product(self):
+        identifier = self.dController.display_get_product_identifier()
+        product = self.pController.get_product_by(identifier)
+        if self.dController.display_product_table("Selected product" ,product):
+            if ConsoleDisplay.display_confirmation():
+                delProduct = self.pController.delete_product_by(identifier)
+                self.dController.display_product_table("Product Deleted correctly",delProduct)
+                return
+            ConsoleDisplay.print_r("Canceled")
+            return
+        else:
+            ConsoleDisplay.print_r("!!No Products found or process canceled¡¡")
 
 
     def run(self):
-        #self.create_product()
-        self.update_product("pd-f4218632-7684-4a62-9e69-037f7d6a3ae7")
-        self.show_all_products()
+        self.dController.display_main_menu(
+            self.show_all_products,
+            self.show_product_by,
+            self.create_product,
+            self.update_product,
+            self.delete_product
+        )
+
+
 
 

@@ -55,6 +55,18 @@ class ProductController():
                     return product
         return None
 
+    def delete_product_by(self, identifier):
+        products = list(self.load_products_from_file(self.fileDir))
+        product = None
+        for p in products:
+            if p.uId == identifier:
+                products.remove(p)
+                product = p
+                break
+        productDict = self.serialize_json_products(products)
+        JsonUtility.save_data(self.fileDir, productDict)
+        return product
+
 
     @staticmethod
     def load_products_from_file(fileDir):
