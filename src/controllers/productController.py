@@ -2,7 +2,7 @@ from src.handlers.jsonUtility import JsonUtility
 from src.model.product import Product
 
 
-class ProductController():
+class ProductController:
 
     def __init__(self, fileDir):
         self.fileDir = fileDir
@@ -20,23 +20,24 @@ class ProductController():
             productDict = self.serialize_json_products(products)
             JsonUtility.save_data(self.fileDir, productDict)
             return product
-
         return None
 
-
-    def get_product_by(self, identifier):
-
+    def get_product_by_id(self, identifier):
         products = list(self.load_products_from_file(self.fileDir))
-        product = None
+        if identifier[1] == "I":
+            product = None
+            for p in products:
+                if p.uId == identifier[0]:
+                    product = p
+            return product
+        foundProducts = []
         for p in products:
-            if p.name == identifier or p.uId == identifier:
-                product = p
-        
-        return product
+            if identifier[0].lower() in p.name.lower():
+                foundProducts.append(p)
+        return foundProducts
 
     def get_all_products(self):
         return self.load_products_from_file(self.fileDir)
-
 
     def update_product_by(self, identifier, newData):
         if newData is None:
@@ -67,7 +68,6 @@ class ProductController():
         JsonUtility.save_data(self.fileDir, productDict)
         return product
 
-
     @staticmethod
     def load_products_from_file(fileDir):
         products = []
@@ -88,11 +88,11 @@ class ProductController():
 
         return products
 
-    def validate_product_data(self, data):
+    @staticmethod
+    def validate_product_data(data):
         if type(data["name"]) is not str or type(data["price"]) is not float or type(data["stock"]) is not int \
             or type(data["description"]) is not str:
             return False
-
         return True
 
     @staticmethod
@@ -100,8 +100,6 @@ class ProductController():
         productList = []
         for p in products:
             productList.append(p.serialize_product())
-
-
         return productList
         
 

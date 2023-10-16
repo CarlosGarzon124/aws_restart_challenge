@@ -6,7 +6,6 @@ import re
 
 class ConsoleDisplay:
 
-
     def display_get_product_data(self):
         inputs = {}
         while True:
@@ -31,16 +30,26 @@ class ConsoleDisplay:
             elif decision is None:
                 return None
 
-
     def display_get_product_identifier(self):
         while True:
-            identifier = self.get_identifier()
-            if identifier is None:
+            selection = self.get_find_type()
+            if selection is None:
                 rprint("Repeat the process please")
                 continue
+            if selection == "I":
+                identifier = self.get_identifier_uId()
+                if identifier is None:
+                    rprint("Repeat the process please")
+                    continue
+                decision = self.confirm_data_input()
+                if decision:
+                    return (identifier, selection)
+                elif decision is None:
+                    return None
+            identifier = input("Introduce the product Name: ").strip()
             decision = self.confirm_data_input()
             if decision:
-                return identifier
+                return (identifier, selection)
             elif decision is None:
                 return None
 
@@ -49,12 +58,11 @@ class ConsoleDisplay:
         menu = MainMenu(function1, function2, function3, function4, function5)
         menu.display_menu()
 
-
     @staticmethod
     def confirm_data_input():
         isOk = None
         while isOk == None:
-            isOk = input("are you sure about this data Y/N: ").upper()
+            isOk = input("Are you sure about this data Y/N: ").upper()
             if isOk == "Y":
                 return True
             if isOk == "N":
@@ -71,7 +79,6 @@ class ConsoleDisplay:
                 rprint("Incorrect answer")
                 isOk = None
 
-
     @staticmethod
     def display_confirmation():
         while True:
@@ -81,7 +88,6 @@ class ConsoleDisplay:
             if isOk == "N":
                 return False
             rprint("Invalid answer, try again")
-
 
     @staticmethod
     def display_product_table(tableName, data):
@@ -93,17 +99,25 @@ class ConsoleDisplay:
         if data is not None:
             table.generate_table_single(data)
             return True
-
         return False
 
     @staticmethod
-    def get_identifier():
+    def get_identifier_uId():
         pattern = r"pd-"
         identifier = input("Introduce the product uId: ").strip()
         if re.search(pattern, identifier):
             return identifier
         else:
             rprint("this is not a valid uId")
+            return None
+
+    @staticmethod
+    def get_find_type():
+        select = input("Introduce a find method, product 'Name' or 'uId' (N/I) : ").strip().upper()
+        if select == "N" or select == "I":
+            return select
+        else:
+            rprint("this is not a valid selector")
             return None
 
     @staticmethod
@@ -123,7 +137,6 @@ class ConsoleDisplay:
         except ValueError:
             print("this is not a valid value for stock.")
             return None
-
 
     @staticmethod
     def print_r(message):

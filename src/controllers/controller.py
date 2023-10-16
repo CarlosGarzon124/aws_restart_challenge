@@ -1,7 +1,7 @@
 from src.controllers.productController import ProductController
 from src.vista.consoleDisplay import ConsoleDisplay
 
-class MainController():
+class MainController:
 
     def __init__(self, JSON_DATA_FILE, DEBUG):
         self.debug = DEBUG
@@ -9,15 +9,13 @@ class MainController():
         self.pController = ProductController(self.json_path)
         self.dController = ConsoleDisplay()
 
-
     def show_product_by(self):
         identifier = self.dController.display_get_product_identifier()
-        product = self.pController.get_product_by(identifier)
+        product = self.pController.get_product_by_id(identifier)
         if self.dController.display_product_table("Selected product", product):
             return
         else:
             ConsoleDisplay.print_r("!!No Products found or process canceled¡¡")
-
 
     def show_all_products(self):
         products = self.pController.get_all_products()
@@ -28,10 +26,9 @@ class MainController():
         product = self.pController.create_product(inputs)
         self.dController.display_product_table("New product", product)
 
-
     def update_product(self):
         identifier = self.dController.display_get_product_identifier()
-        product = self.pController.get_product_by(identifier)
+        product = self.pController.get_product_by_id(identifier)
         if self.dController.display_product_table("Selected product", product):
             inputs = self.dController.display_get_product_data()
             if inputs is None:
@@ -41,7 +38,6 @@ class MainController():
             self.dController.display_product_table("Product updated correctly", product)
         else:
             ConsoleDisplay.print_r("!!No Products found or process canceled¡¡")
-
 
     def delete_product(self):
         identifier = self.dController.display_get_product_identifier()
@@ -55,7 +51,6 @@ class MainController():
             return
         else:
             ConsoleDisplay.print_r("!!No Products found or process canceled¡¡")
-
 
     def run(self):
         self.dController.display_main_menu(
