@@ -14,12 +14,11 @@ class MainMenu:
         self.options = {
             "1": "Show all products",
             "2": "Show a product by",
-            "3": "Create a product",
-            "4": "Update a product",
-            "5": "Delete a product",
+            "3": "Create product",
+            "4": "Update product",
+            "5": "Delete product",
             "q": "Exit"
         }
-
 
     def display_menu(self):
         while True:

@@ -103,7 +103,7 @@ class ConsoleDisplay:
 
     @staticmethod
     def get_identifier_uId():
-        pattern = r"pd-"
+        pattern = r"^pd-"
         identifier = input("Introduce the product uId: ").strip()
         if re.search(pattern, identifier):
             return identifier

@@ -1,3 +1,5 @@
+#Inventario Consola
+
 Instrucciones para correr el codigo de inventario
  python version 3.10
 
@@ -5,6 +7,7 @@ Instrucciones para correr el codigo de inventario
 
 2. Configurar el archivo .env en el directorio raiz del proyecto con las variables
     - JSON_DATA_FILE que es la direccion relativa del archivo json que contiene los datos
+        Originalmente el archivo json esta en src/vista pero en un inicio se puede definir la posicion del archvo
     - ROOT_PATH que es la direccion principal del challenge
 
 3. Instalar dependencias
@@ -12,3 +15,29 @@ Instrucciones para correr el codigo de inventario
     - python-decouple latest
 
 4. Punto de entrada main.py usar la terminal cmd para ver los colores de RICH
+
+5. Menu
+    El menu se compone de 6 opciones y su funcionamiento es el siguiente
+    1. show all products: permite traer una lista con todos los productos
+    2. show a product by: permite seleccionar si buscar por nombre o por uId
+        nombre: puede ser cualquier texto que haga match con el nombre del producto puede devolver una lista o un
+                producto solo, si no encuentra nada devuelve el mensaje "no poducts found or process canceled"
+        uId: tiene que comenzar por "pd-"
+    3. create product: permite añadir los valores "name":string, "price":float , "stock":int, "description":string
+        a un producto y luego añadirlo a la lista de productos,
+    4. Update product: permite seleccionar un producto por uId y modificar los valores del producto, y guardar los
+        cambios en el archivo json
+    5. Delete product: permite seleccinar un producto por uId y borrarlo del archivo json, pide confirmacion antes
+
+6. Flujo de confirmacion
+   la confirmacionde los datos se realiza mediante el ingreso de un valor Y/N por parte del usuario.
+   - al seleccionar Y los datos ingresados por el usuario se usaran para realizar el proceso en cuestion
+   - al seleccionar N se preguntara si quiere cancelar el proceso, a lo que el usuario debera responder Y/N
+        si selecciona y volvera al menu de inicio y tendra el mensaje "No product found or process canceled"
+        so selecciona n volvera a pedir los datos que se preguntaron en el paso anterior
+
+        Nota: solo se pueden ingresar los valores y/n independientemente de si estan en mayuscula o minuscula
+
+##Autor
+
+- [Carlos Garzón](www.linkedin.com/in/carlos-javier-garzon-montoya-63966716b)
