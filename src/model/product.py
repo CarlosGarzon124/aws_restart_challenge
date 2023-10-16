@@ -1,6 +1,10 @@
 import uuid
 
-
+#mapea los datos en al chivo json
+#genera los ids y uid de forma aleatoria cuando se crea por primera vez el objeto, usa la lib uuid para este proceso
+#si el valor de id y uid son None que implica que el producto esta siendo leido de la base de datos utiliza estos valores
+#   en vez de generarlos nuevos
+#se encarga de serializar el objeto en formato json para luego poderlo subir al archivo de bd
 class Product():
     def __init__(self, id=None, uId=None, name=None, price=None, stock=None, description=None):
 
@@ -12,20 +16,8 @@ class Product():
             self.stock = stock
             self.description = description
 
-
-    def mod_name(self, name):
-        self.name = str(name)
-
-    def mod_name(self, price):
-        self.price = float(price)
-
-    def mod_name(self, stock):
-        self.stock = int(stock)
-
-    def mod_name(self, description):
-        self.description = str(description)
-
-
+    #serializa el objeto en diccionario y devuelve el diccionario
+    #no recibe parametros pero trabaja con los argumentos del objeto en cuestion
     def serialize_product(self):
         dictProduct = {
             "id":          self.id,

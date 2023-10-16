@@ -1,8 +1,12 @@
 import json
 from rich import print as rprint
 
+#se encarga de las funcionalidades necesarias para leer los archivos y traer datos o guardarlos
+
 class JsonUtility:
 
+    # usa el bloque try/except para validar si se abre o no el archivo en cuestion, devuelve None en caso de que no exista
+    #lee el archivo, y devuelve los datos, devuelve None en caso de que el archivo este vacio
     @staticmethod
     def load_data(filePath):
         try:
@@ -15,6 +19,8 @@ class JsonUtility:
             rprint(f"The file {filePath} was not found in the specified route")
             return None
 
+    # usa el bloque try/except para validar si se abre o no el archivo en cuestion, devuelve None en caso de que no exista
+    #escribe los datos en el archivo
     @staticmethod
     def save_data(filePath, data):
         try:

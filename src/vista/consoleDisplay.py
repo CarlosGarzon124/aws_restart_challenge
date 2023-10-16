@@ -4,8 +4,22 @@ from collections.abc import Iterable
 from rich import print as rprint
 import re
 
+
+#Se encarga de la logica de la vista y funciona gestionando los objetos de ProductTable y MainMenu
+#Controla las entradas proporcionadas por el usuario y la logica de validacion de datos y confirmacion por parte del usuario
+#las funciones definidas se encargan de desplegar elementos en consola y luego devolver las entradas del usuario
 class ConsoleDisplay:
 
+    #se encarga de instanciar el objeto mainMenu y ejecuta la funcion que muestra el menu
+    #sirve como punto de entrada en la clase contoller
+    #recibe como argumentos las funciones de la clase controller
+    def display_main_menu(self, function1, function2, function3, function4, function5):
+        menu = MainMenu(function1, function2, function3, function4, function5)
+        menu.display_menu()
+
+    #mustra el formulario para recibir los datos del producto por parte del usuario
+    #implementa las funciones de validacion de datos
+    #retorna un diccionario con los datos suministrados o None en caso de cancelar el proceso
     def display_get_product_data(self):
         inputs = {}
         while True:
@@ -30,6 +44,9 @@ class ConsoleDisplay:
             elif decision is None:
                 return None
 
+    #despliega el formulario para obtener el identificador del producto a buscar
+    #retorna una tupla con el valor del identificador en la posicion 0 y el seleccionador en la posicion 1
+    #el seleccionador puede estar entre N para nombre o I para uId
     def display_get_product_identifier(self):
         while True:
             selection = self.get_find_type()
@@ -53,11 +70,8 @@ class ConsoleDisplay:
             elif decision is None:
                 return None
 
-
-    def display_main_menu(self, function1, function2, function3, function4, function5):
-        menu = MainMenu(function1, function2, function3, function4, function5)
-        menu.display_menu()
-
+    #valida si el usuario esta de acuerdo con los datos que agrego, en caso contrario devuelve False y si cancela la
+    #operacion devuelve None
     @staticmethod
     def confirm_data_input():
         isOk = None
@@ -79,6 +93,7 @@ class ConsoleDisplay:
                 rprint("Incorrect answer")
                 isOk = None
 
+    #valida si el usuario esta de acuerdo con la accion de eliminar el producto devuelve true o false
     @staticmethod
     def display_confirmation():
         while True:
@@ -89,6 +104,10 @@ class ConsoleDisplay:
                 return False
             rprint("Invalid answer, try again")
 
+    #utiliza los metodos de la clase ProductTable para mostrar la tabla segun los datos que se le pasen como parametro
+    #   si es una lista usa la funcion para muchos objetos devuelve True ,
+    #   si es un producto solo usa la funcion para mostrar un solo objeto devuelve True,
+    #   si es None devuelve false
     @staticmethod
     def display_product_table(tableName, data):
         table = ProductTable(tableName)
@@ -101,6 +120,8 @@ class ConsoleDisplay:
             return True
         return False
 
+    #valida la informacion de el identificador uId usa regex para validar que el uId proporcionado posea el string "pd-" al inicio
+    #devuelve el identificador o None
     @staticmethod
     def get_identifier_uId():
         pattern = r"^pd-"
@@ -111,6 +132,8 @@ class ConsoleDisplay:
             rprint("this is not a valid uId")
             return None
 
+    #valida la informacion del metodo de busqueda
+    #devuelve el seleccionador o None
     @staticmethod
     def get_find_type():
         select = input("Introduce a find method, product 'Name' or 'uId' (N/I) : ").strip().upper()
@@ -120,6 +143,9 @@ class ConsoleDisplay:
             rprint("this is not a valid selector")
             return None
 
+    #valida el valor de price proporcionado por el usuario
+    #el bloque try/except se encarga de devolver None en caso de que el valor que el usuario proporciono no pueda
+    #   ser casteado a tipo float en caso de que si devuelve el valor de price
     @staticmethod
     def get_price():
         try:
@@ -129,6 +155,9 @@ class ConsoleDisplay:
             print("this is not a valid value for price.")
             return None
 
+    # valida el valor de stock proporcionado por el usuario
+    # el bloque try/except se encarga de devolver None en caso de que el valor que el usuario proporciono no pueda
+    #   ser casteado a tipo integer en caso de que si devuelve el valor de stock
     @staticmethod
     def get_stock():
         try:
@@ -138,6 +167,7 @@ class ConsoleDisplay:
             print("this is not a valid value for stock.")
             return None
 
+    #permite usar el metodo rprint de rich en el controlador principal
     @staticmethod
     def print_r(message):
         rprint(message)
